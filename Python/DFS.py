@@ -1,4 +1,4 @@
-class BFS:
+class DFS:
 
     graph = {1: set([4]),
              2: set([1, 2, 3, 5, 6]),
@@ -10,21 +10,18 @@ class BFS:
              8: set([6, 7]),
              9: set([3, 5]),
              10: set([3])}
-
-    def bfs(self, graph, root):
+    def dfs(self, graph, root):
         markedSet =set()
-        workQueue = [root]
-
-        while workQueue:
-            print(workQueue)
-            v = workQueue.pop(0)
+        workStack = [root]
+        
+        while workStack:
+            print(workStack)
+            v = workStack.pop()
             if v not in markedSet:
                 markedSet.add(v)
-                workQueue.extend(graph[v] - markedSet)
+                workStack.extend(list(graph[v] - markedSet))
         return markedSet
     
-B = BFS()
-G = B.bfs(B.graph, 1)
+D = DFS()
+G = D.dfs(D.graph, 1)
 print(G)
-
-        
