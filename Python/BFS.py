@@ -12,16 +12,18 @@ class BFS:
              10: set([3])}
 
     def bfs(self, graph, root):
-        markedSet =set()
+        markedArray = []
         workQueue = [root]
 
         while workQueue:
             print(workQueue)
             v = workQueue.pop(0)
-            if v not in markedSet:
-                markedSet.add(v)
-                workQueue.extend(graph[v] - markedSet)
-        return markedSet
+            if v not in markedArray:
+                markedArray.append(v)
+                for u in graph[v]:
+                    if u not in markedArray:
+                        workQueue.append(u)
+        return markedArray
     
 B = BFS()
 G = B.bfs(B.graph, 1)

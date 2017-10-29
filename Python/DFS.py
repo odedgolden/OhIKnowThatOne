@@ -10,17 +10,20 @@ class DFS:
              8: set([6, 7]),
              9: set([3, 5]),
              10: set([3])}
+    
     def dfs(self, graph, root):
-        markedSet =set()
+        markedArray = []
         workStack = [root]
         
         while workStack:
             print(workStack)
             v = workStack.pop()
-            if v not in markedSet:
-                markedSet.add(v)
-                workStack.extend(list(graph[v] - markedSet))
-        return markedSet
+            if v not in markedArray:
+                markedArray.append(v)
+                for u in graph[v]:
+                    if u not in markedArray:
+                        workStack.append(u)
+        return markedArray
     
 D = DFS()
 G = D.dfs(D.graph, 1)
