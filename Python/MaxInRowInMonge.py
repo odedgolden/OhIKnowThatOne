@@ -3,21 +3,28 @@ class MaxInRowInMonge:
 
     def findMaxValuesForRows(self,M):
         m = len(M) # Number of rows
+        if m==0:
+            return []
         n = len(M[0]) # Number of columns
+        middleRow = m//2
         resultArray = [0]*m
-        lastMaximumColumnIndex = n-1
-        # For every row from upside down
-        for i in range(m):
-            resultArray[i] = M[i][-1]
-            # For every element to the left of the lastMaximumColumnIndex
-            for j in range(lastMaximumColumnIndex, -1, -1):
-                #print("i,j = " + str(i) +" "+ str(j))
-                #print("lastMaximumColumnIndex: "+str(lastMaximumColumnIndex))
-                #print(resultArray)
-                if M[i][j] > resultArray[i]:
-                    resultArray[i] = M[i][j]
-                    lastMaximumColumnIndex = j
-        return resultArray
+
+        if n==1:
+            resultArray= M[0]
+            
+        # Find the maximum for the middle row:
+        middleRowMax = M[middleRow][0]
+        maxColumnIndex = 0
+        for i in range(len(M[middleRow])):
+            if M[middleRow][i] > middleRowMax:
+                middleRowMax = M[middleRow][i]
+                maxColumnIndex = i
+        # Divide the matrix to two smaller matrices:
+        upperRowsMaximas = self.findMaxValuesForRows([row[maxColumnIndex:] for row in M[:middleRow]])
+        lowerRowsMaximas = self.findMaxValuesForRows([row[:maxColumnIndex+1] for row in M[middleRow+1:]])
+
+        # Concour - return the current array of maximas:
+        return upperRowsMaximas+[middleRowMax]+lowerRowsMaximas
 
     def printMatrix(self, M):
         for row in M:
